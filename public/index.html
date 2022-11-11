@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <title>Document</title>
+    <link type='text/css' rel='stylesheet' href='style.css'/>
+</head>
+
+
+<body>
+    <div id="app">
+        <h1>Basic KanBan</h1>
+        <fieldset>
+            <legend>Boards</legend>
+            <label for="code">Code</label>
+            <input id="code" type="text" v-model="boardForm.code">
+            <label for="title">Title</label>
+            <input id="title" type="text" v-model="boardForm.title">
+            <button v-on:click="add">Add</button>
+            <button v-on:click="load">load</button>
+            <div style="color: #FF0000;">{{msg}}</div>
+        </fieldset>
+        <div class="board" v-if="board">
+            <div class="columns">
+                <div>
+                    <fieldset>
+                        <legend>New Card</legend>
+                        <label for="card-title">Card Title</label>
+                        <br />
+                        <input style="width: 100%;" id="card-title" type="text" v-model="cardForm.title">
+                        <br />
+                        <label for="card-desc">Card Description</label>
+                        <br />
+                        <textarea id="card-desc" rows="6" v-model="cardForm.description"></textarea>
+                        <br />
+                        <button v-on:click="addCard">Add</button>
+                    </fieldset>
+
+                </div>
+                <div class="column">
+                    <div class="header">Waiting</div>
+                    <div class="list">
+                        <div class="card" v-for="card in board.waiting">
+                            <div class="container">
+                                <h4><b>{{card.title}}</b></h4>
+                                <p>{{card.description}}</p>
+                            </div>
+                            <div class="btns">
+                                <button v-on:click="move(card.id)">Move</button>
+                                <button v-on:click="remove(card.id)">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="header">In Progress</div>
+                    <div class="list">
+                        <div class="card" v-for="card in board.in_progress">
+                            <div class="container">
+                                <h4><b>{{card.title}}</b></h4>
+                                <p>{{card.description}}</p>
+                            </div>
+                            <div class="btns">
+                                <button v-on:click="move(card.id)">Move</button>
+                                <button v-on:click="remove(card.id)">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="header">Completed</div>
+                    <div class="list">
+                        <div class="card" v-for="card in board.completed">
+                            <div class="container">
+                                <h4><b>{{card.title}}</b></h4>
+                                <p>{{card.description}}</p>
+                            </div>
+                            <div class="btns">
+                                <button v-on:click="remove(card.id)">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./client.js"></script>
+
+</html>
